@@ -1,0 +1,27 @@
+{
+  "name": "express",
+  "version": "1.0.0",
+  "description": "Capstone Project\r Niyi Adekunle,Gyasi Igyan,Cole Noltimier,Ashley Lowe, Barret Rose",
+  "main": "server.js",
+  "dependencies": {
+    "body-parse": "^0.1.0",
+    "cookie-parse": "^0.4.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poreniyi/Capstone-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/poreniyi/Capstone-Project/issues"
+  },
+  "homepage": "https://github.com/poreniyi/Capstone-Project#readme"
+}

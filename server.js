@@ -9,12 +9,10 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use('/', require('./routes/home'));
+app.use('/', require('./routes/results'));
 
 
-app.post('/results', function(req, res) {
-    console.log(req.body);
-    res.sendFile(path.join(__dirname + '/home.html'));
-})
+
 app.set("port", process.env.PORT || 8081);
 
 var server = app.listen(app.get("port"), function () {

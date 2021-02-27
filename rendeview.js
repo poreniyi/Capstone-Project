@@ -13,15 +13,14 @@ class Rendeview {
     // Create "2D" array to store locations' coordinates
     locationCoordinates = [];
 
-    constructor() {
-        this.getLocationsFromTextFields();
+    constructor(arrayLocations) {
+        this.getLocationsFromTextFields(arrayLocations);
         this.getLocationData();
-
     }
 
-    getLocationsFromTextFields() {
+    getLocationsFromTextFields(arrayLocations) {
         // Temporarily using locations provided above in the sampleLocations array variable
-        this.locationTextFields = sampleLocations;
+        this.locationTextFields = arrayLocations;
     }
 
     async getLocationData() {
@@ -89,11 +88,15 @@ class Rendeview {
         console.log(this.locationTextFields);
         console.log(this.locationPlaceIDs);
         console.log(this.locationCoordinates);
-        
+        return this.locationCoordinates;
+    }
+
+    getCoordinates(){
+        return this.locationCoordinates;
     }
 }
 
-let test = new Rendeview();
-test.debugPrint();
+//let test = new Rendeview();
+//test.debugPrint();
 
-
+module.exports = Rendeview;

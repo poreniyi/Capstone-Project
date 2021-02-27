@@ -1,4 +1,6 @@
 const {Client} = require("@googlemaps/google-maps-services-js");
+const config = require('./config');
+var mykey = config.GMaps_Key;
 
 // Sample data until we figure out how to transfer data from form into class
 sampleLocations = ['Ponce City Market', 'KSU Marietta Campus', 'Six Flags over Georgia'];
@@ -34,7 +36,7 @@ class Rendeview {
             .findPlaceFromText({
                 // Parameters to pass for API (see GMaps Documentation)
                 params: {
-                key: "AIzaSyCaZQu6bZp1vVbyZbnI04E8pkzRHhDsanw",
+                key: mykey,
                 input: this.locationTextFields[i],
                 inputtype: "textquery"
                 },
@@ -60,7 +62,7 @@ class Rendeview {
             .geocode({
                 // Parameters to pass for API (see GMaps Documentation)
                 params: {
-                key: "AIzaSyCaZQu6bZp1vVbyZbnI04E8pkzRHhDsanw",
+                key: mykey,
                 place_id: this.locationPlaceIDs[i],
                 },
                 timeout: 1000, // milliseconds

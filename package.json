@@ -4,6 +4,7 @@
   "description": "Capstone Project\r Niyi Adekunle,Gyasi Igyan,Cole Noltimier,Ashley Lowe, Barret Rose",
   "main": "server.js",
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.1.16",
     "body-parse": "^0.1.0",
     "cookie-parse": "^0.4.0",
     "ejs": "^3.1.6",

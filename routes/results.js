@@ -19,9 +19,8 @@ const Rendeview2 = require('../rendeview2.js');
 router.post('/results', async(req,res)=>{
     var locationTextField = req.body.location;
     var test = new Rendeview2(locationTextField);
-    var coordinates = [];
-    console.log(apiData)
     let apiData=await test.exportCoordinates();
+    console.log(apiData)
     res.render('results',{
         data:req.body,
         centerpointLat:apiData[0],

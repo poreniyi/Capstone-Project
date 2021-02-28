@@ -1,6 +1,6 @@
 const {Client} = require("@googlemaps/google-maps-services-js");
 const config = require('./config');
-var mykey = config.GMaps_Key;
+let mykey = config.GMaps_Key;
 
 // Sample data until we figure out how to transfer data from form into class
 sampleLocations = ['Ponce City Market', 'KSU Marietta Campus', 'Six Flags over Georgia'];
@@ -12,10 +12,13 @@ class Rendeview {
     locationPlaceIDs = [];
     // Create "2D" array to store locations' coordinates
     locationCoordinates = [];
+    // Create array to store centerpoint coordinates
+    centerpointCoordinates = [];
 
     constructor(arrayLocations) {
         this.getLocationsFromTextFields(arrayLocations);
         this.getLocationData();
+        this.calculateCenterpoint();
     }
 
     getLocationsFromTextFields(arrayLocations) {
@@ -23,14 +26,15 @@ class Rendeview {
         this.locationTextFields = arrayLocations;
     }
 
+    // Idea to address async/await: Split function into singular request and then aggregate responses in another function
     async getLocationData() {
         // Create GMaps client object
         const client = new Client({});
         
 
         // Loop through each location and make API call
-        for (var i=0; i<this.locationTextFields.length; i++) {
-            client
+        for (let i=0; i<this.locationTextFields.length; i++) {
+            await client
             // Type of API Call - Find Place request (location search query -> place_id)
             .findPlaceFromText({
                 // Parameters to pass for API (see GMaps Documentation)
@@ -51,12 +55,12 @@ class Rendeview {
             });
 
             // Temporary sleep to ensure data is inserted into array in same order as locationTextFields
-            await new Promise(r => setTimeout(r, 1000));
+            //await new Promise(r => setTimeout(r, 1000));
         }
 
         // Loop through each location and make API call
-        for (var i=0; i<this.locationPlaceIDs.length; i++) {
-            client
+        for (let i=0; i<this.locationPlaceIDs.length; i++) {
+            await client
             // Type of API Call - Geocode conversion (place_id -> lat/lng coordinates)
             .geocode({
                 // Parameters to pass for API (see GMaps Documentation)
@@ -68,8 +72,8 @@ class Rendeview {
             })
             // Response handling
             .then((r) => {
-                var lat = r.data.results[0]['geometry']['location']['lat'];
-                var lng = r.data.results[0]['geometry']['location']['lng'];
+                let lat = r.data.results[0]['geometry']['location']['lat'];
+                let lng = r.data.results[0]['geometry']['location']['lng'];
                 this.locationCoordinates.push([lat, lng]);
             })
             // Error handling
@@ -78,22 +82,41 @@ class Rendeview {
             });
 
             // Temporary sleep to ensure data is inserted into array in same order as locationTextFields
-            await new Promise(r => setTimeout(r, 1000));
+            //await new Promise(r => setTimeout(r, 1000));
         }
     }
 
-    async debugPrint()
-    {
-        await new Promise(r => setTimeout(r, 10000));
+    async calculateCenterpoint() {
+        // Sleep until all GMaps get requests to fill arrays are done
+        await new Promise(r => setTimeout(r, 3000));
+
+        let totalLat = 0;
+        let totalLng = 0;
+        
+        for (let i=0; i<this.locationCoordinates.length; i++) {
+            totalLat += this.locationCoordinates[i][0];
+            totalLng += this.locationCoordinates[i][1];
+        }
+
+        let avgLat = totalLat/this.locationCoordinates.length;
+        let avgLng = totalLng/this.locationCoordinates.length;
+
+        this.centerpointCoordinates = [avgLat, avgLng];
+    }
+
+    async debugPrint() {
+        await new Promise(r => setTimeout(r, 5000));
         console.log(this.locationTextFields);
         console.log(this.locationPlaceIDs);
         console.log(this.locationCoordinates);
-        return this.locationCoordinates;
+        console.log(this.centerpointCoordinates)
     }
 
-    getCoordinates(){
-        return this.locationCoordinates;
+    async exportCoordinates() {
+        await new Promise(r => setTimeout(r, 5000));
+        return this.centerpointCoordinates;
     }
+
 }
 
 //let test = new Rendeview();

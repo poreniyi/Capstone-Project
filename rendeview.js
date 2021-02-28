@@ -1,6 +1,6 @@
 const {Client} = require("@googlemaps/google-maps-services-js");
-const config = require('./config');
-let mykey = config.GMaps_Key;
+require('dotenv').config();// if file ever moved need to change path
+let mykey = process.env.GMaps_Key;
 
 // Sample data until we figure out how to transfer data from form into class
 sampleLocations = ['Ponce City Market', 'KSU Marietta Campus', 'Six Flags over Georgia'];

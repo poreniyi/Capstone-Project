@@ -5,12 +5,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
+    <script src="/config.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBpJwKuwvWYmqM3Tk0C1LaBhu6cfrBoKU&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+    <style type="text/css">
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+          height: 100%;
+        }
+  
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+      </style>
+      <script>
+        "use strict";
+
+        // Passed data through ejs render somehow converted data into string, must parseFloat
+        let centerpointLat = parseFloat('<%= centerpointLat %>');
+        let centerpointLng = parseFloat('<%= centerpointLng %>');    
+
+        function initMap() {
+          const myLatLng = {
+            lat: centerpointLat,
+            lng: centerpointLng
+          };
+          const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 13,
+            center: myLatLng,
+            fullscreenControl: false,
+            zoomControl: true,
+            mapTypeControl: false,
+            streetViewControl: false
+          });
+          new google.maps.Marker({
+            position: myLatLng,
+            map,
+            title: "Hello World!"
+          });
+        }
+      </script>
 </head>
 <body>
     <div>
         <%  data.location.forEach(element=>{ %>
                 Address:<%=element +"\n"%> 
         <%}) %>
+        <%= centerpointLat %>
+        <%= centerpointLng %>
     </div>
+    <div id="map"></div>
 </body>
 </html>

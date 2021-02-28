@@ -11,36 +11,15 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBpJwKuwvWYmqM3Tk0C1LaBhu6cfrBoKU&callback=initMap&libraries=&v=weekly"
       defer
     ></script>
-    <link rel='stylesheet' href='/stylesheets/results.css'>
-      <script>
-        "use strict";
-
-        // Passed data through ejs render somehow converted data into string, must parseFloat
-        let centerpointLat = parseFloat('<%= centerpointLat %>');
-        let centerpointLng = parseFloat('<%= centerpointLng %>');    
-
-        function initMap() {
-          const myLatLng = {
-            lat: centerpointLat,
-            lng: centerpointLng
-          };
-          const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 13,
-            center: myLatLng,
-            fullscreenControl: false,
-            zoomControl: true,
-            mapTypeControl: false,
-            streetViewControl: false
-          });
-          new google.maps.Marker({
-            position: myLatLng,
-            map,
-            title: "Hello World!"
-          });
-        }
-      </script>
+    <link rel='stylesheet' href='/stylesheets/results.css'>      
 </head>
 <body>
+  <!-- let centerpointLat = parseFloat('<%= centerpointLat %>');
+  let centerpointLng = parseFloat('<%= centerpointLng %>');     -->
+  <div id='latCenter' hidden><%= centerpointLat %>'</div>
+  <div id='lngCenter' hidden><%= centerpointLng %>'</div>
+  <script src='/scripts/finalResult.js'></script>
+
     <div>
         <%  data.location.forEach(element=>{ %>
                 Address:<%=element +"\n"%> 

@@ -91,7 +91,11 @@ class Rendeview {
 
     async exportCoordinates() {
         await new Promise(r => setTimeout(r, 5000));
-        return this.centerpointCoordinates;
+        return{
+            centerpointCoordinates:this.centerpointCoordinates,
+            locationCoordinates:this.locationCoordinates,
+        }
+        //return this.centerpointCoordinates;
     }
 
 }

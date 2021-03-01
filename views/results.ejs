@@ -15,16 +15,21 @@
 </head>
 <body>
 
-  <div id='latCenter' hidden><%= centerpointLat %>'</div>
-  <div id='lngCenter' hidden><%= centerpointLng %>'</div>
+  <div id='latCenter' hidden><%= centerpoint[0] %>'</div>
+  <div id='lngCenter' hidden><%= centerpoint[1] %>'</div>
   <script src='/scripts/finalResult.js'></script>
 
+  <%=locationCoordiantes%>
+  <% let counter=0%>
     <div>
         <%  data.location.forEach(element=>{ %>
-                Address:<%=element +"\n"%> 
+              <div>
+                <%=`Address${counter}:${element}`%>
+              </div>
+                <%counter++%> 
         <%}) %>
-        <%= centerpointLat %>
-        <%= centerpointLng %>
+        <%= `lattitude:${centerpoint[0]},`%>
+        <%= `longitude:${centerpoint[1]}`%>
     </div>
     <div id="map"></div>
 </body>

@@ -20,10 +20,11 @@ router.post('/results', async(req,res)=>{
     var locationTextField = req.body.location;
     var test = new Rendeview2(locationTextField);
     let apiData=await test.exportCoordinates();
-    console.log(apiData)
+    centerpoint=apiData.centerpointCoordinates;
+    res.locals.loc=apiData.locationCoordinates;
     res.render('results',{
         data:req.body,
-        centerpointLat:apiData[0],
-        centerpointLng:apiData[1] })
+        centerpoint,
+         })
 })
 module.exports=router;

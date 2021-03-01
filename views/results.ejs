@@ -19,12 +19,13 @@
   <div id='lngCenter' hidden><%= centerpoint[1] %>'</div>
   <script src='/scripts/finalResult.js'></script>
 
-  <%=locationCoordiantes%>
-  <% let counter=0%>
+
     <div>
+      <% let counter=0%>
+
         <%  data.location.forEach(element=>{ %>
               <div>
-                <%=`Address${counter}:${element}`%>
+                <%=`Address${counter}:${element} Cooridinates:${locals.loc[counter]}`%>
               </div>
                 <%counter++%> 
         <%}) %>

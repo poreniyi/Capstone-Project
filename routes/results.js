@@ -30,4 +30,12 @@ router.post('/results', async(req,res)=>{
         centerpoint,
          })
 })
+
+router.get('/test',async(req,res)=>{
+    let places=['place1','place2'];
+    let location={location:places};
+    res.locals.loc=[[34.0381785,-84.5826712],[38.7501833,-77.4505874]];
+    let centerpoint=[36.3941809,-81.0166293];
+    res.render('results',{data:location,centerpoint});
+})
 module.exports=router;

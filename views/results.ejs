@@ -27,8 +27,14 @@
                 <%=`Address${counter+1}:${element} Cooridinates:${locals.loc[counter]}`%>
               </div>
               <div class='locInfo' hidden>
-                <%=locals.loc[counter]%>
+                <div class='coordiantes'>
+                  <%=locals.loc[counter]%>
+                </div>
+                <div class='Address'>
+                  <%= element%>
+                </div>
               </div>
+              
                 <%counter++%> 
         <%}) %>
         <%= `Centerpoint coordiantes lattitude:${centerpoint[0]},`%>

@@ -3,8 +3,10 @@
 // Passed data through ejs render somehow converted data into string, must parseFloat 
 let centerpointLat = parseFloat(document.getElementById('latCenter').textContent);
 let centerpointLng = parseFloat(document.getElementById('lngCenter').textContent);
-let infoDiv=document.getElementById('info');
-let locInfo=[...document.getElementsByClassName('locInfo')];
+let infoDiv = document.getElementById('info');
+let locInfo = [...document.getElementsByClassName('locInfo')];
+let displayInfo = [...document.getElementsByClassName('displayInfo')];
+
 let centerpointMarker;
 function initMap() {
   const myLatLng = {
@@ -19,30 +21,41 @@ function initMap() {
     mapTypeControl: false,
     streetViewControl: false
   });
-   centerpointMarker=new google.maps.Marker({
+  centerpointMarker = new google.maps.Marker({
     position: myLatLng,
     map,
     title: "Hello World!",
     label: 'Centerpoint'
   });
-  for(let i=0;i<locInfo.length;i++){
-    let info=locInfo[i];
-    let coordinates=info.querySelector('.coordiantes').textContent.split(',');
-    let address=info.querySelector('.Address').textContent;
-      const LatLng={
-        lat:Number(coordinates[0]),
-        lng:Number(coordinates[1])
-      }
-      new google.maps.Marker({
-        position: LatLng,
-        map,
-        title: `Address${i+1}`,
-        label: address
-      })
-  }
-  centerpointMarker.addListener('click',()=>{
-    console.log('clicked');
+  let centerpoint=document.getElementById('centerpoint');
+  centerpointMarker.addListener('mouseover', () => {
+    centerpoint.style.backgroundColor='red' //for future add a css class to style this div and toggle it off in mouseout
   })
+  centerpointMarker.addListener('mouseout', () => {
+    centerpoint.style.backgroundColor=''
+  })
+  for (let i = 0; i < locInfo.length; i++) {
+    let info = locInfo[i];
+    let coordinates = info.querySelector('.coordiantes').textContent.split(',');
+    let address = info.querySelector('.Address').textContent;
+    const LatLng = {
+      lat: Number(coordinates[0]),
+      lng: Number(coordinates[1])
+    }
+    let marker = new google.maps.Marker({
+      position: LatLng,
+      map,
+      title: `Address${i + 1}`,
+      label: address
+    })
+    marker.addListener('mouseover', () => {
+      displayInfo[i].style.backgroundColor='red' //for future add a css class to style this div and toggle it off in mouseout
+    })
+    marker.addListener('mouseout', () => {
+      displayInfo[i].style.backgroundColor=''
+    })
+  }
+
 }
 
 

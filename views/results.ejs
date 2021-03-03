@@ -17,10 +17,12 @@
 
   <div id='latCenter' hidden><%= centerpoint[0] %>'</div>
   <div id='lngCenter' hidden><%= centerpoint[1] %>'</div>
+  <div id="map"></div>
+
   <script src='/scripts/finalResult.js'></script>
 
 
-    <div>
+    <div id='info'>
       <% let counter=0%>
 
         <%  data.location.forEach(element=>{ %>
@@ -32,6 +34,5 @@
         <%= `Centerpoint coordiantes lattitude:${centerpoint[0]},`%>
         <%= `longitude:${centerpoint[1]}`%>
     </div>
-    <div id="map"></div>
 </body>
 </html>

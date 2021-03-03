@@ -34,8 +34,8 @@ router.post('/results', async(req,res)=>{
 router.get('/test',async(req,res)=>{
     let places=['place1','place2'];
     let location={location:places};
-    res.locals.loc=[[34.0381785,-84.5826712],[38.7501833,-77.4505874]];
-    let centerpoint=[36.3941809,-81.0166293];
+    res.locals.loc=[[33.9408531,-84.5204241],[34.0381785,-84.5826712]]; //KSU Marietta KSU Kennesaw
+    let centerpoint=[33.9895158,-84.55154765];
     res.render('results',{data:location,centerpoint});
 })
 module.exports=router;

@@ -20,6 +20,7 @@
           new google.maps.Marker({
             position: myLatLng,
             map,
-            title: "Hello World!"
+            title: "Hello World!",
+            label:'Centerpoint'
           });
         }

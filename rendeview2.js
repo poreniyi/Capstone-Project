@@ -75,6 +75,33 @@ class Rendeview {
 
         this.centerpointCoordinates = [avgLat, avgLng];
     }
+    async findNearBySpots(centerpoint,type) {
+        let apiData = await client.placesNearby({
+            params: {
+                key: mykey,
+                radius: 1609.34,// distance in meters
+                type: type,
+                location: {
+                    latitude: this.centerpointCoordinates[0],
+                    longitude:this.centerpointCoordinates[1], 
+                }
+            }
+        })
+        let possibleMeetUpSpots=[];
+        apiData.data.results.forEach(element=>{
+           if(element.business_status=='OPERATIONAL'){
+               possibleMeetUpSpots.push({
+                   name:element.name,
+                   coordinates:element.geometry.location,
+                   address:element.vicinity,
+                   type:type
+               })
+           }
+        })
+        //sort possibleMeetUpSpots
+        let bestMeetUps=possibleMeetUpSpots.slice(0,5);
+        return bestMeetUps;
+    }
 
     async debugPrint() {
         await new Promise(r => setTimeout(r, 5000));

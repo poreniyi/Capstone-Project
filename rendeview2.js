@@ -16,14 +16,9 @@ class Rendeview {
     centerpointCoordinates = [];
 
     constructor(arrayLocations) {
-        this.getLocationsFromTextFields(arrayLocations);
+        this.locationTextFields=arrayLocations;// Temporarily using locations provided above in the sampleLocations array variable
         this.getLocationData();
         this.calculateCenterpoint();
-    }
-
-    getLocationsFromTextFields(arrayLocations) {
-        // Temporarily using locations provided above in the sampleLocations array variable
-        this.locationTextFields = arrayLocations;
     }
 
     // Idea to address async/await: Split function into singular request and then aggregate responses in another function

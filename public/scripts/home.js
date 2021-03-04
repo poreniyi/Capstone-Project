@@ -22,6 +22,7 @@ addButton.addEventListener('click',()=>{
     newLocation.style.width='50%'
     let close= document.createElement('span');
     close.textContent='x';
+    close.classList.add('close');
     let PersonsName=document.createElement('input');
     PersonsName.name='Name';
     close.addEventListener('click',()=>{

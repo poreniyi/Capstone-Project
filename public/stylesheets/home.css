@@ -1,0 +1,6 @@
+.close {
+    cursor: pointer;
+    right: 0%;
+    transform: translate(0%, -50%);
+  }
+  .close:hover {background: #bbb;}

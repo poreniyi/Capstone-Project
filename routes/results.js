@@ -22,14 +22,13 @@ router.post('/results', async(req,res)=>{
     locationTextField=locationTextField.map(location=>location.trim());
     if(!locationTextField.length) res.redirect('/')
     console.log(locationTextField);
-    console.log(typeof locationTextField);
     var test = new Rendeview2(locationTextField);
     let apiData=await test.exportCoordinates();
     centerpoint=apiData.centerpointCoordinates;
-    res.locals.loc=apiData.locationCoordinates;
     res.render('results',{
         locations:locationTextField,
         centerpoint,
+        loc:apiData.locationCoordinates
          })
 })
 

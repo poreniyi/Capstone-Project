@@ -6,7 +6,7 @@ let centerpointLng = parseFloat(document.getElementById('lngCenter').textContent
 let infoDiv = document.getElementById('info');
 let locInfo = [...document.getElementsByClassName('locInfo')];
 let displayInfo = [...document.getElementsByClassName('displayInfo')];
-
+let polyline='wbdnEz{zbOMwB@s@He@NgA?o@?MEAQCsBAm@?cA@?y@@cBPqCnBsHH_@z@iDz@iCh@qB~AeFjAgDj@wAV}@b@kCNqBBaBEsAOoBYoAc@wAeBmEs@}A]cAwBkFYs@Ec@Ig@Ce@F_@NUVOVER@PHPRHN@XC^On@Qf@cAhBo@vA_A`BWb@wAvBuBrCgArBU\\aCxFqAnCuDjHyBhEKb@Kj@k@hAcCrEy@nAkAtAu@r@e@`@gAr@iAn@u@\\_Bh@s@NaBVkALy@@_THeEB{BFkAHgALqATaBd@sBp@mCjA{CnBcGpFqBfByEtEgFzEsArAqBlBeD~C}ObOqV`VcNlMyNhN{MjMgGfGiChCmEjEcJbJeA~@_CbCw@t@sDtDoDxDaC~CyBdDyAjC}A`D{AxDwEvLiDhI{@jBsAfCqItOwAhCwAbCoBlCo@v@eBfByApAuAdAqChBcAh@aHdDuU~KsDfBkM|G_GxCu@ZyBx@oBh@sBb@oFz@qNtBkFx@oEl@kFz@uHhAmIpAyCh@qAXwC|@mBv@kAj@gCvAcJhGqMxIsAz@{@TcA^eBn@u@Tk@JaCNwGPcCJqBHUDeAVl@vEn@vFR|A^rBV~@p@bB`ChEq@x@o@x@s@v@g@ZoAh@cATgAJ_G?uKEc@A?NA\\O?mA?M?'
 let centerpointMarker;
 function initMap() {
   const myLatLng = {
@@ -39,7 +39,7 @@ function initMap() {
     strokeOpacity: 0.8,
     strokeWeight: 2,
     fillColor: "#FF0000",
-    fillOpacity: 0.35,
+    fillOpacity: 0.00,
     map,
     center: myLatLng,
     radius: 8046,//in meters
@@ -65,7 +65,16 @@ function initMap() {
       displayInfo[i].style.backgroundColor=''
     })
   }
-
+  console.log(google.maps.geometry.encoding.decodePath(polyline));
+  polyline=google.maps.geometry.encoding.decodePath(polyline);
+  const path= new google.maps.Polyline({
+    path:polyline,
+    geodesic:true,
+    strokeColor:"FF0000",
+    strokeOpacity:1.0,
+    strokeWeight:2,
+  })
+  path.setMap(map);
 }
 
 

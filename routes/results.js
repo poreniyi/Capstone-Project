@@ -17,7 +17,12 @@ const Rendeview2 = require('../rendeview2.js');
 // })
 
 router.post('/results', async(req,res)=>{
-    var locationTextField = req.body.location;
+    // var locationTextField = req.body.location;
+    let formData=JSON.parse(req.body.data);
+    let locationTextField=[];
+    formData.forEach(element=>{
+        locationTextField.push(element.location);
+    })
     locationTextField=locationTextField.filter(location=>location);
     locationTextField=locationTextField.map(location=>location.trim());
     if(!locationTextField.length) res.redirect('/')
@@ -31,11 +36,15 @@ router.post('/results', async(req,res)=>{
         loc:apiData.locationCoordinates
          })
 })
-
+let fs=require('fs').promises;
+let path=require('path');
 router.get('/test',async(req,res)=>{
-    let locations=['KSU Marietta','KSU Kennesaw'];
-    res.locals.loc=[[33.9408531,-84.5204241],[34.0381785,-84.5826712]];
-    let centerpoint=[33.9895158,-84.55154765];
-    res.render('results',{locations,centerpoint});
+    let data=await fs.readFile(path.join(__dirname,"../sampleData.json"));
+    data=JSON.parse(data);
+    res.render('results',{
+        locations:data.locations,
+        loc:data.loc,
+        centerpoint:data.centerpoint,
+    });
 })
 module.exports=router;

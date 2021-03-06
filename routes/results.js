@@ -39,7 +39,7 @@ router.post('/results', async(req,res)=>{
 let fs=require('fs').promises;
 let path=require('path');
 router.get('/test',async(req,res)=>{
-    let data=await fs.readFile(path.join(__dirname,"../sampleData.json"));
+    let data=await fs.readFile(path.join(__dirname,"../sampleAPIData.json"));
     data=JSON.parse(data);
     res.render('results',{
         locations:data.locations,

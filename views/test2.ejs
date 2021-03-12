@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rendeview</title>
+    <link rel='stylesheet' href='/stylesheets/home.css'>  
+</head>
+<body>
+
+    <h1 style="text-align: center">Welcome to the future home of the Rendeview web app!</h1>
+
+    <div style ="text-align: center;border: 2px solid black; width: 50%; margin: auto; padding: 8px">
+        <form id='form' action="/results" method="post">
+            <br>
+            <button id="add" type="button">Add Location</button>
+            <div class='addressInfo'>
+                <label>Location:1</label><input class='defaultSearchInputs' type="text" name="location" value='Kennesaw State University, Chastain Road Northwest, Kennesaw, GA, USA' style="width: 50%; margin: 3px">
+                <label>Name:</label></Name><input type="text" name="Name" >
+            </div>
+            <div class='addressInfo'>
+                <label>Location:2</label><input class='defaultSearchInputs' type="text" name="location" value='Kennesaw State University - Marietta Campus, South Marietta Parkway Southeast, Marietta, GA, USA' style="width: 50%; margin: 3px">
+                <label>Name:</label></Name><input type="text" name="Name" >
+            </div>
+            <input id='submit' type="Submit" value="Next">
+        </form>
+    </div>
+
+  <script src='/scripts/home.js'></script>
+</body>
+</html>

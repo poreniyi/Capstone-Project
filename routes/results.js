@@ -1,7 +1,7 @@
 let router = require('express').Router();
-const Rendeview = require('../rendeview.js');
-const Rendeview2 = require('../rendeview2.js');
-const Rendeview3 = require('../rendeview3.js');
+const Rendeview = require('../Rendeview/rendeview.js');
+const Rendeview2 = require('..//Rendeview/rendeview2.js');
+const Rendeview3 = require('..//Rendeview/rendeview3.js');
 
 // router.post('/results', function(req, res) {
 //     var locationTextField = req.body.location;

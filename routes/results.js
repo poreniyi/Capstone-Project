@@ -1,6 +1,7 @@
 let router = require('express').Router();
 const Rendeview = require('../rendeview.js');
 const Rendeview2 = require('../rendeview2.js');
+const Rendeview3 = require('../rendeview3.js');
 
 // router.post('/results', function(req, res) {
 //     var locationTextField = req.body.location;
@@ -16,26 +17,41 @@ const Rendeview2 = require('../rendeview2.js');
 //     })
 // })
 
+// router.post('/results', async(req,res)=>{
+//     // var locationTextField = req.body.location;
+//     let formData=JSON.parse(req.body.data);
+//     let locationTextField=[];
+//     console.log(formData);
+//     formData.forEach(element=>{
+//         locationTextField.push(element.location);
+//     })
+//     locationTextField=locationTextField.filter(location=>location);
+//     locationTextField=locationTextField.map(location=>location.trim());
+//     if(!locationTextField.length) res.redirect('/')
+//     console.log(locationTextField);
+//     var test = new Rendeview2(locationTextField);
+//     let apiData=await test.exportCoordinates();
+//     centerpoint=apiData.centerpointCoordinates;
+//     res.render('results',{
+//         locations:locationTextField,
+//         centerpoint,
+//         loc:apiData.locationCoordinates
+//          })
+// })
 router.post('/results', async(req,res)=>{
-    // var locationTextField = req.body.location;
     let formData=JSON.parse(req.body.data);
-    let locationTextField=[];
-    formData.forEach(element=>{
-        locationTextField.push(element.location);
-    })
-    locationTextField=locationTextField.filter(location=>location);
-    locationTextField=locationTextField.map(location=>location.trim());
-    if(!locationTextField.length) res.redirect('/')
-    console.log(locationTextField);
-    var test = new Rendeview2(locationTextField);
-    let apiData=await test.exportCoordinates();
-    centerpoint=apiData.centerpointCoordinates;
-    res.render('results',{
-        locations:locationTextField,
-        centerpoint,
-        loc:apiData.locationCoordinates
-         })
+    let places=formData.filter(location=>location.coordinates);
+    console.log(places.length);
+    if(!places.length|| places.length<2) {
+        res.redirect('/')
+    }else{
+        console.log(formData);
+        var test = new Rendeview3(formData);
+        let data=await test.returnResult();
+        res.send(data);
+    }  
 })
+
 let fs=require('fs').promises;
 let path=require('path');
 router.get('/test',async(req,res)=>{
@@ -46,5 +62,9 @@ router.get('/test',async(req,res)=>{
         loc:data.loc,
         centerpoint:data.centerpoint,
     });
+})
+
+router.get('/test2',(req,res)=>{
+    res.render('test2');
 })
 module.exports=router;

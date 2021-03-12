@@ -1,5 +1,5 @@
 const { Client } = require("@googlemaps/google-maps-services-js");
-const client = new Client({});require('dotenv').config();// if file ever moved need to change path
+const client = new Client({}); require('dotenv').config();// if file ever moved need to change path
 let mykey = process.env.GMaps_Key;
 
 // Sample data until we figure out how to transfer data from form into class
@@ -15,34 +15,38 @@ class Rendeview {
     }
 
     async findTripLength() {
-        let originCoordinates=[];
-        let data = [
-            {
-                lat: 33.9408531,
-                lng: -84.5204241
-            },
-            {
-                lat: 34.0381785,
-                lng: -84.5826712
-            }
-        ]
+        let originCoordinates = [];
+        let tempCenterpoint = this.centerpointCoordinates;
         for (let i = 0; i < this.places.length; i++) {
             originCoordinates.push({
-                lat:this.places[i].coordinates.lat,
-                lng:this.places[i].coordinates.lng,
+                lat: this.places[i].coordinates.lat,
+                lng: this.places[i].coordinates.lng,
             })
         }
-        console.log(originCoordinates);
         let apiData = await client.distancematrix({
             params: {
                 key: mykey,
-                units:'imperial',
-                destinations: this.centerpointCoordinates,
-                origins:data
+                units: 'imperial',
+                destinations: [this.centerpointCoordinates],
+                origins: originCoordinates
             }
         })
-        console.log(apiData.data.rows[0].elements);
-
+        let rows = apiData.data.rows;
+        let totalTripTime = 0;
+        let totalTripDistance = 0;
+        for (let i = 0; i < rows.length; i++) {
+            // console.log(rows[i].elements[0].duration);//value for time expressed in seconds
+            //console.log(rows[i].elements[0].distance);//value for distance expressed in meters
+            totalTripTime += rows[i].elements[0].duration
+            totalTripDistance += rows[i].elements[0].distance
+        }
+        let avgTripTime = totalTripTime / rows.length;
+        let avgTripDistance = totalTripTime / rows.length;
+        if (avgTripTime > 300 || avgTripDistance > 8046.72) { // longer than 5mins or above 5miles 
+            //balancing algorithm
+        }
+        //console.log(apiData.data.rows[0].elements);
+        this.centerpointCoordinates = tempCenterpoint;
     }
 
     async findDirections() {
@@ -73,14 +77,14 @@ class Rendeview {
                 steps.push(individualStep);
             })
             let obj = {
-                Polyline: apiData.data.routes[0].overview_polyline,
+                Polyline: apiData.data.routes[0].overview_polyline.points,
                 totalDistance: route.distance,
                 totalDuration: route.duration,
                 Steps: steps,
                 Start: route.start_location,
                 End: route.end_location,
             }
-            places[i].Directions = obj;
+            this.places[i].Directions = obj;
             //console.log(obj);
         }
     }
@@ -97,7 +101,7 @@ class Rendeview {
         let avgLng = totalLng / this.places.length;
         this.centerpointCoordinates = { lat: avgLat, lng: avgLng };
     }
-    async findNearBySpots(centerpoint, type) {
+    async findNearBySpots(type) {
         type = 'cafe';
         let apiData = await client.placesNearby({
             params: {
@@ -122,18 +126,22 @@ class Rendeview {
             }
         })
         //sort possibleMeetUpSpots
-        let bestMeetUps = possibleMeetUpSpots.slice(0, 5);
-        return bestMeetUps;
+        this.nearbySpots = possibleMeetUpSpots.slice(0, 5);
+        //return bestMeetUps;
     }
 
     async calculateResult() {
-        await findDirections(places)
+        await this.findTripLength()
+        await this.findDirections()
+        await this.findNearBySpots();
     }
 
     async returnResult() {
+        await this.calculateResult()
         return {
             centerpointCoordinates: this.centerpointCoordinates,
             places: this.places,
+            possibleMeetUpSpots: this.nearbySpots
         }
     }
 

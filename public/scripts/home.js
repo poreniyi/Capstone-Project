@@ -46,6 +46,7 @@ let sendPost = async() => {
     })
     //console.log(data);
   let newForm=document.createElement('form');
+  newForm.style.visibility='hidden';
   newForm.method='POST';
   newForm.action='/results'
   let dataInput=document.createElement('input');

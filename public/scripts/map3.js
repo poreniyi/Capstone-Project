@@ -86,6 +86,9 @@ function initMap() {
     place.addEventListener('mouseout',()=>{
         marker.setAnimation(null);
     })
+    place.addEventListener('click',()=>{
+        map.setCenter(coordinates);
+    })
     marker.addListener('mouseover', () => {
         place.style.backgroundColor='red' //for future add a css class to style this div and toggle it off in mouseout
     })

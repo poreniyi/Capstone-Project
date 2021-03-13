@@ -47,7 +47,7 @@ router.post('/results', async(req,res)=>{
     }else{
        var rendezvous = new Rendeview3(formData);
        let data=await rendezvous.returnResult();
-        res.send(data);
+        res.render('result3',data);
     }  
 })
 

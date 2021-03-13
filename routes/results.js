@@ -40,14 +40,13 @@ const Rendeview3 = require('..//Rendeview/rendeview3.js');
 // })
 router.post('/results', async(req,res)=>{
     let formData=JSON.parse(req.body.data);
+    let types= JSON.parse(req.body.type);
     let places=formData.filter(location=>location.coordinates);
-    console.log(places.length);
     if(!places.length|| places.length<2) {
         res.redirect('/')
     }else{
-        console.log(formData);
-        var test = new Rendeview3(formData);
-        let data=await test.returnResult();
+       var result = new Rendeview3(formData);
+       let data=await result.returnResult();
         res.send(data);
     }  
 })

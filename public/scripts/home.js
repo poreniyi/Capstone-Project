@@ -26,6 +26,8 @@ document.head.appendChild(script);
 
 
 let sendPost = async() => {
+    let checkBoxes=[...document.querySelectorAll("[name='type']")]
+
     let counter=1;
     let locatinInputs=[...document.querySelectorAll("[name='location'")];
     let data=[];
@@ -44,6 +46,12 @@ let sendPost = async() => {
         data.push(obj);
        counter++;
     })
+    let typeData=[];
+    checkBoxes.forEach(element=>{
+        if(element.checked){
+            typeData.push(element.value);
+        }
+    })
     //console.log(data);
   let newForm=document.createElement('form');
   newForm.style.visibility='hidden';
@@ -53,7 +61,14 @@ let sendPost = async() => {
   dataInput.type='text';
   dataInput.name='data';
   dataInput.value=JSON.stringify(data);
+  let checkInput=document.createElement('input');
+  checkInput.type='text';
+  checkInput.name='type';
+  checkInput.value=JSON.stringify(typeData);
+  console.log(checkInput.value);
   newForm.appendChild(dataInput);
+  newForm.appendChild(checkInput);
+
  document.body.appendChild(newForm);
  newForm.submit();
 }

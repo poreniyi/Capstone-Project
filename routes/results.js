@@ -45,8 +45,8 @@ router.post('/results', async(req,res)=>{
     if(!places.length|| places.length<2) {
         res.redirect('/')
     }else{
-       var result = new Rendeview3(formData);
-       let data=await result.returnResult();
+       var rendezvous = new Rendeview3(formData);
+       let data=await rendezvous.returnResult();
         res.send(data);
     }  
 })

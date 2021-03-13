@@ -1,0 +1,240 @@
+{
+  "centerpointCoordinates": {
+    "lat": 33.987624950000004,
+    "lng": -84.55119855
+  },
+  "places": [
+    {
+      "PersonsName": "Person:1",
+      "coordinates": {
+        "lat": 34.03817850000001,
+        "lng": -84.5826712
+      },
+      "location": "Kennesaw State University",
+      "Directions": {
+        "Polyline": "sawnEjagcO}AC_@GKGAW]CcB?_HEi@FaAd@q@XsAn@i@cBc@}AWaBCa@@MBUDQFGTGbAGfAQpHuCrAe@xAWlDa@~Cy@hAYxAIf@?|@Nr@V`@Rd@^jBhBZZf@d@l@^d@Jb@@b@G`@MPK^e@BUf@i@t@y@j@c@TQWiAWqADy@Ha@DK^ShAq@~GwDpAs@nAi@pEsAxE}AXOTYl@WnB{@pFkDz@s@~@g@`BgAxCsBbBeAh@YlB}@nBs@zBs@bEw@pFy@pUmDpO_C~@OnAWhEiA`A]hDoApAi@~BkAbIiExQyJrO{HvQuIpDkBtBsAvC_CrAqAxCqDrAoBtBsDlHyMxBaE|@kBpDiI|@}BxH}QfAwBvAgC~@{AXEDABAvA_Bl@g@d@Yp@]p@Sr@ONC|@E`A?fEFnFHpALp@Px@Zd@VVPv@r@ZVbE|ErCfD@FBBtJpLVVJ`AUn@oEtM}BtGqC|HaBxEc@rAy@~Bc@UmAq@sDgBqAq@K?eE}ByC{A{DuAy@]i@_@}@y@eGiGdA_Cj@}APc@l@sBXqA",
+        "totalDistance": {
+          "text": "7.0 mi",
+          "value": 11285
+        },
+        "totalDuration": {
+          "text": "13 mins",
+          "value": 767
+        },
+        "Steps": [
+          {
+            "Maneuver": "none",
+            "Distance": {
+              "text": "0.3 mi",
+              "value": 468
+            },
+            "Duration": {
+              "text": "2 mins",
+              "value": 148
+            }
+          },
+          {
+            "Maneuver": "turn-right",
+            "Distance": {
+              "text": "0.1 mi",
+              "value": 162
+            },
+            "Duration": {
+              "text": "1 min",
+              "value": 25
+            }
+          },
+          {
+            "Maneuver": "turn-right",
+            "Distance": {
+              "text": "0.8 mi",
+              "value": 1212
+            },
+            "Duration": {
+              "text": "2 mins",
+              "value": 107
+            }
+          },
+          {
+            "Maneuver": "turn-left",
+            "Distance": {
+              "text": "302 ft",
+              "value": 92
+            },
+            "Duration": {
+              "text": "1 min",
+              "value": 23
+            }
+          },
+          {
+            "Maneuver": "ramp-right",
+            "Distance": {
+              "text": "3.8 mi",
+              "value": 6061
+            },
+            "Duration": {
+              "text": "4 mins",
+              "value": 228
+            }
+          },
+          {
+            "Maneuver": "ramp-right",
+            "Distance": {
+              "text": "0.8 mi",
+              "value": 1341
+            },
+            "Duration": {
+              "text": "1 min",
+              "value": 76
+            }
+          },
+          {
+            "Maneuver": "turn-right",
+            "Distance": {
+              "text": "0.5 mi",
+              "value": 841
+            },
+            "Duration": {
+              "text": "1 min",
+              "value": 71
+            }
+          },
+          {
+            "Maneuver": "turn-right",
+            "Distance": {
+              "text": "0.5 mi",
+              "value": 869
+            },
+            "Duration": {
+              "text": "1 min",
+              "value": 66
+            }
+          },
+          {
+            "Maneuver": "turn-right",
+            "Distance": {
+              "text": "0.1 mi",
+              "value": 239
+            },
+            "Duration": {
+              "text": "1 min",
+              "value": 23
+            }
+          }
+        ],
+        "Start": {
+          "lat": 34.0381788,
+          "lng": -84.58277869999999
+        },
+        "End": {
+          "lat": 33.9870831,
+          "lng": -84.5514412
+        }
+      }
+    },
+    {
+      "PersonsName": "Person:2",
+      "coordinates": {
+        "lat": 33.9370714,
+        "lng": -84.5197259
+      },
+      "location": "Kennesaw State University - Marietta Campus",
+      "Directions": {
+        "Polyline": "ghcnEjyzbODt@HVHJJHXEXIj@C@i@`@s@^}@Fa@IkASq@_AoCSOISEOGaACq@G{AIkDGm@]w@_BqF_AeDwLlFoErBaD|AeBf@}@Zk@TS@WHaCjA{BdAgBr@OXSJeEhBaBt@aDxAkD~AkBr@e@PQAwAh@{@^wErBeA`@kAf@_D|ASNELuAj@yDbB{CrAoCpAiAl@wBvA_CnBgClCm@p@K?OL_DlDgCrCsDlEeBhBaDtDc@h@AFEVGJaAbA}AfBwCdD}NtPeKlLmFfG}EpFqQtS{BjCSF}@jAsAnBmAtBkA|B}AhEgCnHcBvEoDrJeEvLsChIoBzFsBzFwBjGgG_DqBaAI?cCsAcDgBgBs@qBs@q@WcAk@_A{@gEiEcAcARc@x@mBbAiCx@kD",
+        "totalDistance": {
+          "text": "5.3 mi",
+          "value": 8505
+        },
+        "totalDuration": {
+          "text": "13 mins",
+          "value": 802
+        },
+        "Steps": [
+          {
+            "Maneuver": "none",
+            "Distance": {
+              "text": "354 ft",
+              "value": 108
+            },
+            "Duration": {
+              "text": "1 min",
+              "value": 43
+            }
+          },
+          {
+            "Maneuver": "turn-left",
+            "Distance": {
+              "text": "0.4 mi",
+              "value": 705
+            },
+            "Duration": {
+              "text": "2 mins",
+              "value": 100
+            }
+          },
+          {
+            "Maneuver": "turn-left",
+            "Distance": {
+              "text": "4.1 mi",
+              "value": 6584
+            },
+            "Duration": {
+              "text": "10 mins",
+              "value": 570
+            }
+          },
+          {
+            "Maneuver": "turn-right",
+            "Distance": {
+              "text": "0.5 mi",
+              "value": 869
+            },
+            "Duration": {
+              "text": "1 min",
+              "value": 66
+            }
+          },
+          {
+            "Maneuver": "turn-right",
+            "Distance": {
+              "text": "0.1 mi",
+              "value": 239
+            },
+            "Duration": {
+              "text": "1 min",
+              "value": 23
+            }
+          }
+        ],
+        "Start": {
+          "lat": 33.936839,
+          "lng": -84.52006
+        },
+        "End": {
+          "lat": 33.9870831,
+          "lng": -84.5514412
+        }
+      }
+    }
+  ],
+  "possibleMeetUpSpots": [
+    {
+      "name": "McDonald's",
+      "coordinates": {
+        "lat": 33.982438,
+        "lng": -84.558483
+      },
+      "address": "1291 Bells Ferry Road, Marietta",
+      "type": "cafe"
+    },
+    {
+      "name": "Circle K",
+      "coordinates": {
+        "lat": 33.9941526,
+        "lng": -84.5486533
+      },
+      "address": "1760 Bells Ferry Road, Marietta",
+      "type": "cafe"
+    }
+  ]
+}

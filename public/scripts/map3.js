@@ -80,11 +80,17 @@ function initMap() {
     console.log(polylineText);
     let polyline=makePolyline(polylineText);
     polyline.set(map);
+    place.addEventListener('mouseover',()=>{
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+    })
+    place.addEventListener('mouseout',()=>{
+        marker.setAnimation(null);
+    })
     marker.addListener('mouseover', () => {
-      displayInfo[i].style.backgroundColor='red' //for future add a css class to style this div and toggle it off in mouseout
+        place.style.backgroundColor='red' //for future add a css class to style this div and toggle it off in mouseout
     })
     marker.addListener('mouseout', () => {
-      displayInfo[i].style.backgroundColor=''
+        place.style.backgroundColor=''
     })
   }
   for(let i=0; i<meetUpSpots.length;i++){

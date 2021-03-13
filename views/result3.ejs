@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
-    <script src="/config.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBpJwKuwvWYmqM3Tk0C1LaBhu6cfrBoKU&callback=initMap&libraries=geometry&v=weekly"
@@ -31,9 +30,22 @@
                 <%message+=`Distance:${element.Directions.totalDistance.text}les\n` %>
                 <%message+=`Time:${element.Directions.totalDuration.text}`%>
                 <div hidden class='hiddenInfo'>
+                    <div class='Polyline'><%=element.Directions.Polyline %></div>
+                    <div class='coordinates'>
+                        <div class='lat'><%=element.coordinates.lat%></div>
+                        <div class='lng'><%=element.coordinates.lng%></div>
+                    </div>
+                    <div class='PersonsName'><%=element.PersonsName%></div>
+                    <div class='Address'><%=element.location%></div>
                 </div>
                 <p><%=message%></p>
-
+                <div class='steps'>
+                <ol>
+                <% element.Directions.Steps.forEach(step=>{%>
+                   <li><%=`${step.Maneuver} ${step.Distance.text}`%></li> 
+               <% })%>
+                 </ol>
+                </div>
             </div>
             <% })%>
         </div>

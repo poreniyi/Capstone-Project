@@ -21,7 +21,7 @@ function initMap() {
           })
           return marker;
       }
-    let makePolyline=(polyline)=>{
+    let makePolyline=(polyline,map)=>{
         const path= new google.maps.Polyline({
             path:polyline,
             geodesic:true,
@@ -29,6 +29,7 @@ function initMap() {
             strokeOpacity:1.0,
             strokeWeight:2,
           })
+          path.setMap(map);
           return path;
     }
   const myLatLng = {
@@ -77,9 +78,15 @@ function initMap() {
     let marker=addMarker(coordinates,Address,PersonsName);
     let polylineText=place.querySelector('.Polyline').textContent;
     polylineText=google.maps.geometry.encoding.decodePath(polylineText);
-    console.log(polylineText);
-    let polyline=makePolyline(polylineText);
-    polyline.set(map);
+    const path= new google.maps.Polyline({
+        path:polylineText,
+        geodesic:true,
+        strokeColor:"FF0000",
+        strokeOpacity:1.0,
+        strokeWeight:2,
+      })
+     // path.setMap(map);
+    let polyline=makePolyline(polylineText,map);
     place.addEventListener('mouseover',()=>{
         marker.setAnimation(google.maps.Animation.BOUNCE);
     })

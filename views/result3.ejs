@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <script src="/config.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBpJwKuwvWYmqM3Tk0C1LaBhu6cfrBoKU&callback=initMap&libraries=geometry&v=weekly"
+      defer
+    ></script>
+    <link rel='stylesheet' href='/stylesheets/results.css'>      
+</head>
+<body>
+
+
+  <div id="map"></div>
+  <div id='latCenter' hidden><%=centerpointCoordinates.lat %>'</div>
+  <div id='lngCenter' hidden><%= centerpointCoordinates.lng %>'</div>
+  <div id='Centerpoint'>
+    <%=`Centerpoint:${centerpointCoordinates.lat},${centerpointCoordinates.lng}` %>
+  </div>
+    <div id='placesInfo'>
+        <% let counter=0%>
+        <% places.forEach(element=>{%>
+        <div class='individualPlace'>
+            <%let message=''%>
+            <%message+=`${element.PersonsName}:${element.location}\n`%>
+            <%message+=`Distance:${element.Directions.totalDistance.text}\n` %>
+            <%message+=`Time:${element.Directions.totalDuration.text}`%>
+            <pre><%=message%></pre>
+            <div hidden clas='hiddenInfo'>
+
+            </div>
+        </div>
+        <% })%>
+    </div>
+    <div id='possibleMeetSpots'>
+        <% possibleMeetUpSpots.forEach(element=>{%>
+            <div class='spot'>
+                <div class='spotName'><%=element.name%></div>
+                <div class='spotCooordinates'>
+                    <div hidden class='spotLat'><%=element.coordinates.lat%></div>
+                    <div hidden class='spotLng'><%=element.coordinates.lng%></div>
+                </div>
+                <div id='spotAdresss'><%=element.address%></div>
+                <div id='spotType'><%=element.type%></div>
+            </div>
+        <%})%>
+    </div>
+    <script src='/scripts/map3.js'></script>
+
+</body>
+</html>

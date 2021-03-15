@@ -48,15 +48,32 @@ function initMap() {
     position: myLatLng,
     map,
     title: "Hello World!",
-    label: 'Centerpoint'
+    label: 'Centerpoint',
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 8.5,
+      fillColor: "#05631b",
+      fillOpacity: 0.4,
+      strokeWeight: 0.4
+    }
   });
   let centerpoint = document.getElementById('Centerpoint');
   centerpointMarker.addListener('mouseover', () => {
-    centerpoint.style.backgroundColor = 'red' //for future add a css class to style this div and toggle it off in mouseout
+    centerpoint.style.backgroundColor = '#05631b' //for future add a css class to style this div and toggle it off in mouseout
   })
   centerpointMarker.addListener('mouseout', () => {
     centerpoint.style.backgroundColor = ''
   })
+  centerpoint.addEventListener('mouseover', () => {
+    centerpointMarker.setAnimation(google.maps.Animation.BOUNCE);
+  })
+  centerpoint.addEventListener('mouseout', () => {
+    centerpointMarker.setAnimation(null);
+  })
+  centerpoint.addEventListener('click', () => {
+    map.setCenter(myLatLng);
+  })
+
   const radius = new google.maps.Circle({
     strokeColor: "#FF0000",
     strokeOpacity: 0.8,
@@ -113,15 +130,15 @@ function initMap() {
       strokeWeight: 1
     })
     marker.addListener('mouseover', () => {
-      spot.style.backgroundColor='#add8e6'
+      spot.style.backgroundColor = '#add8e6'
     })
     marker.addListener('mouseout', () => {
-      spot.style.backgroundColor=''
+      spot.style.backgroundColor = ''
     })
-    spot.addEventListener("mouseover",()=>{
+    spot.addEventListener("mouseover", () => {
       marker.setAnimation(google.maps.Animation.BOUNCE);
     })
-    spot.addEventListener("mouseout",()=>{
+    spot.addEventListener("mouseout", () => {
       marker.setAnimation(null);
     })
     spot.addEventListener('click', () => {

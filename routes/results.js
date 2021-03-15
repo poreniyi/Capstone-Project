@@ -2,6 +2,8 @@ let router = require('express').Router();
 const Rendeview = require('../Rendeview/rendeview.js');
 const Rendeview2 = require('..//Rendeview/rendeview2.js');
 const Rendeview3 = require('..//Rendeview/rendeview3.js');
+let randomWords = require('random-words');
+
 
 // router.post('/results', function(req, res) {
 //     var locationTextField = req.body.location;
@@ -38,32 +40,54 @@ const Rendeview3 = require('..//Rendeview/rendeview3.js');
 //         loc:apiData.locationCoordinates
 //          })
 // })
-router.post('/results', async(req,res)=>{
-    let formData=JSON.parse(req.body.data);
-    let types= JSON.parse(req.body.type);
-    let places=formData.filter(location=>location.coordinates);
-    if(!places.length|| places.length<2) {
+router.post('/results', async (req, res) => {
+    let formData = JSON.parse(req.body.data);
+    let types = JSON.parse(req.body.type);
+    let places = formData.filter(location => location.coordinates);
+    if (!places.length || places.length < 2) {
         res.redirect('/')
-    }else{
-       var rendezvous = new Rendeview3(formData);
-       let data=await rendezvous.returnResult();
-        res.render('result3',data);
-    }  
+        return;
+    }
+    var rendezvous = new Rendeview3(formData);
+    let data = await rendezvous.returnResult();
+    let collection = req.app.locals.collection;
+    let id = ''
+    let docExists = true
+    while (docExists) {
+        id = randomWords({ exactly: 1, wordsPerString: 3, maxLength: 7, separator: '' })[0];
+        docExists = await collection.findOne({ _id: id });
+    }
+    collection.insertOne({ _id: id, data, DOC: Date.now() });
+    let view = `${req.originalUrl}/id:${id}`
+    res.render('result3', data);
+
 })
 
-let fs=require('fs').promises;
-let path=require('path');
-router.get('/test',async(req,res)=>{
-    let data=await fs.readFile(path.join(__dirname,"../sampleAPIData.json"));
-    data=JSON.parse(data);
-    res.render('results',{
-        locations:data.locations,
-        loc:data.loc,
-        centerpoint:data.centerpoint,
+let fs = require('fs').promises;
+let path = require('path');
+router.get('/test', async (req, res) => {
+    let data = await fs.readFile(path.join(__dirname, "../sampleAPIData.json"));
+    data = JSON.parse(data);
+    res.render('results', {
+        locations: data.locations,
+        loc: data.loc,
+        centerpoint: data.centerpoint,
     });
 })
 
-router.get('/test2',(req,res)=>{
+router.get('/test2', (req, res) => {
     res.render('test2');
 })
-module.exports=router;
+
+router.get('/id/:id', async (req, res) => {
+    let collection = req.app.locals.collection;
+    let doc = await collection.findOne({ _id: req.params.id })
+    if (!doc) {
+        res.send('404');
+        return
+    }
+    data=doc.data;
+    res.render('result3',data)
+})
+
+module.exports = router;

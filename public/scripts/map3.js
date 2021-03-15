@@ -7,7 +7,7 @@ let places = [...document.getElementsByClassName('individualPlace')];
 let polyline='wbdnEz{zbOMwB@s@He@NgA?o@?MEAQCsBAm@?cA@?y@@cBPqCnBsHH_@z@iDz@iCh@qB~AeFjAgDj@wAV}@b@kCNqBBaBEsAOoBYoAc@wAeBmEs@}A]cAwBkFYs@Ec@Ig@Ce@F_@NUVOVER@PHPRHN@XC^On@Qf@cAhBo@vA_A`BWb@wAvBuBrCgArBU\\aCxFqAnCuDjHyBhEKb@Kj@k@hAcCrEy@nAkAtAu@r@e@`@gAr@iAn@u@\\_Bh@s@NaBVkALy@@_THeEB{BFkAHgALqATaBd@sBp@mCjA{CnBcGpFqBfByEtEgFzEsArAqBlBeD~C}ObOqV`VcNlMyNhN{MjMgGfGiChCmEjEcJbJeA~@_CbCw@t@sDtDoDxDaC~CyBdDyAjC}A`D{AxDwEvLiDhI{@jBsAfCqItOwAhCwAbCoBlCo@v@eBfByApAuAdAqChBcAh@aHdDuU~KsDfBkM|G_GxCu@ZyBx@oBh@sBb@oFz@qNtBkFx@oEl@kFz@uHhAmIpAyCh@qAXwC|@mBv@kAj@gCvAcJhGqMxIsAz@{@TcA^eBn@u@Tk@JaCNwGPcCJqBHUDeAVl@vEn@vFR|A^rBV~@p@bB`ChEq@x@o@x@s@v@g@ZoAh@cATgAJ_G?uKEc@A?NA\\O?mA?M?'
 let meetUpSpots=[...document.getElementsByClassName('spot')];
 let centerpointMarker;
-
+let polylineList=[];
 
 
 
@@ -78,15 +78,8 @@ function initMap() {
     let marker=addMarker(coordinates,Address,PersonsName);
     let polylineText=place.querySelector('.Polyline').textContent;
     polylineText=google.maps.geometry.encoding.decodePath(polylineText);
-    const path= new google.maps.Polyline({
-        path:polylineText,
-        geodesic:true,
-        strokeColor:"FF0000",
-        strokeOpacity:1.0,
-        strokeWeight:2,
-      })
-     // path.setMap(map);
     let polyline=makePolyline(polylineText,map);
+
     place.addEventListener('mouseover',()=>{
         marker.setAnimation(google.maps.Animation.BOUNCE);
     })
@@ -116,5 +109,10 @@ function initMap() {
 
 
 }
+//things that don't depend on googleMapAPI
+let copyCoordinates=document.getElementById('copyCoordinates');
 
-
+copyCoordinates.addEventListener('click',()=>{
+  let value=copyCoordinates.dataset.copy;
+  navigator.clipboard.writeText(value);
+})

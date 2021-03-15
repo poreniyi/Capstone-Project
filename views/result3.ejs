@@ -13,14 +13,17 @@
     <link rel='stylesheet' href='/stylesheets/results3.css'>      
 </head>
 <body>
-
-
+    
+  <div>Share Link this link with your friends:
+  <span><%=`${code}`%></span>
+  </div>
   <div id='info'>
     <div id='latCenter' hidden><%=centerpointCoordinates.lat %>'</div>
     <div id='lngCenter' hidden><%= centerpointCoordinates.lng %>'</div>
     <div id='Centerpoint'>
         <%=`Centerpoint:${centerpointCoordinates.lat},${centerpointCoordinates.lng}` %>
     </div>
+    <div data-copy=<%=`${centerpointCoordinates.lat},${centerpointCoordinates.lng}`%> id='copyCoordinates'>click to copy coordinates</div>
         <div id='placesInfo'>
             <% let counter=0%>
             <% places.forEach(element=>{%>

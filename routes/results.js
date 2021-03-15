@@ -57,10 +57,10 @@ router.post('/results', async (req, res) => {
         id = randomWords({ exactly: 1, wordsPerString: 3, maxLength: 7, separator: '' })[0];
         docExists = await collection.findOne({ _id: id });
     }
+    data.code=id;
     collection.insertOne({ _id: id, data, DOC: Date.now() });
     let view = `${req.originalUrl}/id:${id}`
-    res.render('result3', data);
-
+    res.redirect(`/code/${id}`)
 })
 
 let fs = require('fs').promises;
@@ -79,14 +79,15 @@ router.get('/test2', (req, res) => {
     res.render('test2');
 })
 
-router.get('/id/:id', async (req, res) => {
+router.get('/code/:code', async (req, res) => {
     let collection = req.app.locals.collection;
-    let doc = await collection.findOne({ _id: req.params.id })
+    let doc = await collection.findOne({ _id: req.params.code })
     if (!doc) {
         res.send('404');
         return
     }
     data=doc.data;
+    data.code=doc._id;
     res.render('result3',data)
 })
 

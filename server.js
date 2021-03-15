@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
-var path = require('path')
+var path = require('path');
+const MongoCLient=require('mongodb').MongoClient;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -11,7 +12,11 @@ app.set("view engine", "ejs");
 app.use('/', require('./routes/home'));
 app.use('/', require('./routes/results'));
 
-
+MongoCLient.connect(process.env.mongo_uri,{useNewUrlParser:true,useUnifiedTopology:true}).then(client=>{
+    const db=client.db('Points');
+    const collection=db.collection('Data');
+    app.locals.collection=collection;
+});
 
 app.set("port", process.env.PORT || 8081);
 

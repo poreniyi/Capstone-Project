@@ -95,7 +95,19 @@ function initMap() {
     let marker = addMarker(coordinates, Address, PersonsName);
     let polylineText = place.querySelector('.Polyline').textContent;
     polylineText = google.maps.geometry.encoding.decodePath(polylineText);
-    let polyline = makePolyline(polylineText, map);
+    let polyline = makePolyline(polylineText, map)
+    polylineList.push(polyline);
+    polyline.addListener('mouseover', () => {
+      for (let j = 0; j < polylineList.length; j++) {
+        polylineList[j].setMap(null);
+      }
+      polyline.setMap(map);
+    })
+    polyline.addListener('mouseout', () => {
+      for (let j = 0; j < polylineList.length; j++) {
+        polylineList[j].setMap(map);
+      }
+    })
 
     place.addEventListener('mouseover', () => {
       marker.setAnimation(google.maps.Animation.BOUNCE);

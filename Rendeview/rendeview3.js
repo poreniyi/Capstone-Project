@@ -1,7 +1,7 @@
 const { Client } = require("@googlemaps/google-maps-services-js");
-const client = new Client({}); 
+const client = new Client({});
 let path = require('path');
-require('dotenv').config({path:path.resolve(__dirname,'../.env')});// if file ever moved need to change path
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });// if file ever moved need to change path
 let mykey = process.env.GMaps_Key;
 
 // Sample data until we figure out how to transfer data from form into class
@@ -16,9 +16,12 @@ class Rendeview {
         this.calculateCenterpoint();
     }
 
-    async findTripLength() {
+    async findTripLength(tempCenterpoint) {
         let originCoordinates = [];
-        let tempCenterpoint = this.centerpointCoordinates;
+        if (!tempCenterpoint) {
+            console.log(`No temporary centerpoint`)
+            tempCenterpoint = this.centerpointCoordinates;
+        }
         for (let i = 0; i < this.places.length; i++) {
             originCoordinates.push({
                 lat: this.places[i].coordinates.lat,
@@ -29,26 +32,37 @@ class Rendeview {
             params: {
                 key: mykey,
                 units: 'imperial',
-                destinations: [this.centerpointCoordinates],
+                destinations: [tempCenterpoint],
                 origins: originCoordinates
             }
         })
         let rows = apiData.data.rows;
-        let totalTripTime = 0;
-        let totalTripDistance = 0;
+        let trips = [];
         for (let i = 0; i < rows.length; i++) {
-            // console.log(rows[i].elements[0].duration);//value for time expressed in seconds
-            //console.log(rows[i].elements[0].distance);//value for distance expressed in meters
-            totalTripTime += rows[i].elements[0].duration
-            totalTripDistance += rows[i].elements[0].distance
+            //console.log(trips[i].elements[0].duration.value);//value for time expressed in seconds
+            //console.log(trips[i].elements[0].distance.value);//value for distance expressed in meters
+            trips.push({
+                value: rows[i].elements[0].duration.value,
+                coordinates: originCoordinates[i],
+            })
         }
-        let avgTripTime = totalTripTime / rows.length;
-        let avgTripDistance = totalTripTime / rows.length;
-        if (avgTripTime > 300 || avgTripDistance > 8046.72) { // longer than 5mins or above 5miles 
-            //balancing algorithm
-        }
-        //console.log(apiData.data.rows[0].elements);
+        trips.sort((a, b) => b.value - a.value);
+        let max = trips[0]
+        let min = trips[trips.length - 1];
+        let range = max.value - min.value;
+        console.log(`${range}`);
+        // if (range > 300) {
+        //     console.log(`Balancing triggered`);
+        //     console.log(`Old Tempcenterpoint is ${tempCenterpoint.lat},${tempCenterpoint.lng}`)
+        //     let latToAdd = (max.coordinates.lat - tempCenterpoint.lat) / 3;
+        //     let lngToAdd = (max.coordinates.lng - tempCenterpoint.lng) / 3;
+        //     tempCenterpoint.lat += latToAdd;
+        //     tempCenterpoint.lng += lngToAdd;
+        //     console.log(`New Tempcenterpoint is ${tempCenterpoint.lat},${tempCenterpoint.lng}`)
+        //     this.findTripLength(tempCenterpoint);
+        // }
         this.centerpointCoordinates = tempCenterpoint;
+
     }
 
     async findDirections() {
@@ -68,7 +82,7 @@ class Rendeview {
                 }
             })
             let route = apiData.data.routes[0].legs[0];
-             // console.log(apiData.data.routes[0].legs);
+            // console.log(apiData.data.routes[0].legs);
             let steps = [];
             route.steps.forEach(element => {
                 let individualStep = {

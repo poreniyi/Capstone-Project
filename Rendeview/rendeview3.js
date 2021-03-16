@@ -19,7 +19,6 @@ class Rendeview {
     async findTripLength(tempCenterpoint) {
         let originCoordinates = [];
         if (!tempCenterpoint) {
-            console.log(`No temporary centerpoint`)
             tempCenterpoint = this.centerpointCoordinates;
         }
         for (let i = 0; i < this.places.length; i++) {
@@ -50,7 +49,6 @@ class Rendeview {
         let max = trips[0]
         let min = trips[trips.length - 1];
         let range = max.value - min.value;
-        console.log(`${range}`);
         // if (range > 300) {
         //     console.log(`Balancing triggered`);
         //     console.log(`Old Tempcenterpoint is ${tempCenterpoint.lat},${tempCenterpoint.lng}`)

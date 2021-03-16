@@ -68,13 +68,14 @@ class Rendeview {
                 }
             })
             let route = apiData.data.routes[0].legs[0];
-            //  console.log(apiData.data.routes[0].legs);
+             // console.log(apiData.data.routes[0].legs);
             let steps = [];
             route.steps.forEach(element => {
                 let individualStep = {
                     Maneuver: element.maneuver || 'none',
                     Distance: element.distance,
                     Duration: element.duration,
+                    Instruction: element.html_instructions,
                 }
                 steps.push(individualStep);
             })

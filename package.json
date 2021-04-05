@@ -6,6 +6,7 @@
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.1.16",
     "body-parse": "^0.1.0",
+    "bootstrap-icons": "^1.4.1",
     "cookie-parse": "^0.4.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",

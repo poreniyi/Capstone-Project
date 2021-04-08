@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+<title>Rendeview | Home</title>
+<link rel="icon" href="/Frontend/free-sport-car-icon-1768-thumb.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/Frontend/home.css">
+<link rel="stylesheet" href="/Frontend/home.js">
+</head>
+<body>
+<div class="wrap_page">
+  <div class="top">
+	<div class="logo-nav auto-margin">
+	  <div class="logo-cont">
+      Rendeview
+      </div><!--/logo-->
+    </div>
+</div><!--/top-->
+<main>
+<div class="page">
+	<div class="body-content" id="main">
+	  <div class="col-30">
+	    <div class="col-content">
+	      <div class="block formSection">
+		    <form id="locations" name="locations" action="/results" method="post">
+            <div class="block"> <!--First Line for Address-->
+              <div class="wrap-field">
+                <div class="errMsg1">Please enter at least two locations!</div>
+                <div class="errMsg2">Please enter this field!</div>             
+                <input type="text" name="location" id="location" placeholder="Enter Address or Zipcode" class="txt-field req-fld" />
+              </div>
+			      </div>
+			      <div class="block"> <!--Second Line for Address-->		  
+              <div class="wrap-field">
+                <div class="errMsg1">Please enter at least two locations!</div>
+                <div class="errMsg2">Please enter this field!</div>
+                <input type="text" name="location" id="location" placeholder="Enter Address or Zipcode" class="txt-field req-fld"/>
+              </div>
+           </div>
+            <div class="block"> <!--Third Line for Address--> 		  
+              <div class="wrap-field">
+                <div class="errMsg2">Please enter this field!</div>
+                <input type="text" name="location" id="location" placeholder="Enter Address or Zipcode" class="txt-field req-fld"/>
+              </div>
+            </div>
+            <div class="block"> <!--Fourth Line for Address-->		  
+              <div class="wrap-field">
+                <div class="errMsg2">Please enter this field!</div>
+                <input type="text" name="location" id="location" placeholder="Enter Address or Zipcode" class="txt-field req-fld"/>
+              </div>
+            </div>
+            <!-- See link for logic:
+            https://stackoverflow.com/questions/32382450/dynamically-display-html-elements-via-loop
+            -->
+            <i type="button" id="addremove" class="bi bi-plus-circle"></i>
+            <i type="button" id="addremove" class="bi bi-x-circle-fill" onclick="add(document.forms[0].element.value)"></i>
+            <div class="block"> <!--Line for Venue-->		  
+              <div class="wrap-field">
+                <div class="errMsg2">Please enter this field!</div>
+                <input type="text" name="venue" id="venue" placeholder="Venue Type     " class="txt-field req-fld"/>
+              </div>
+            </div>
+            <div class="block txt-center">
+              <input type="submit" name="btn-sumbit" id="btnFrmSubmit" value="Go" class="btn-submit" />
+            </div>
+            </form>
+		  </div>
+	    </div>
+	  </div>
+	  <div class="col-70 main-left">
+	    <div class="col-content">
+		</div>
+	  </div>
+	</div>
+  </div><!-- / page-->
+  <div class="btn-top"><i class="fas fa-angle-up"></i></div>
+  <div class="footer">
+  
+  </div><!--/ footer-->
+</div>
+</main>
+</body>
+</html>
+

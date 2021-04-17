@@ -102,7 +102,7 @@ addButton.addEventListener('click', () => {
     googleLocations.push(autocomplete);
     newLocation.name = 'location';
     let close = document.createElement('span');
-    close.textContent = 'x';
+    close.textContent = 'Remove';
     close.classList.add('close');
     let PersonsName = document.createElement('input');
     PersonsName.name = 'Name';
@@ -111,10 +111,13 @@ addButton.addEventListener('click', () => {
     });
     newDiv.appendChild(addressLabel);
     newDiv.appendChild(newLocation);
+    newDiv.appendChild(document.createElement('br'));
     newDiv.appendChild(nameLabel);
     newDiv.appendChild(PersonsName);
+    newDiv.appendChild(document.createElement('br'));
     newDiv.appendChild(close);
-    form.insertBefore(newDiv, submit);
+    newDiv.appendChild(document.createElement('hr'));
+    form.insertBefore(newDiv, checkBoxes);
 })
 
 

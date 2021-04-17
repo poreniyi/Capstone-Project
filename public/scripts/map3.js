@@ -3,6 +3,7 @@
 // Passed data through ejs render somehow converted data into string, must parseFloat 
 let centerpointLat = parseFloat(document.getElementById('latCenter').textContent);
 let centerpointLng = parseFloat(document.getElementById('lngCenter').textContent);
+let searchRadius = parseFloat(document.getElementById('searchRadius').textContent);
 let places = [...document.getElementsByClassName('individualPlace')];
 let polyline = 'wbdnEz{zbOMwB@s@He@NgA?o@?MEAQCsBAm@?cA@?y@@cBPqCnBsHH_@z@iDz@iCh@qB~AeFjAgDj@wAV}@b@kCNqBBaBEsAOoBYoAc@wAeBmEs@}A]cAwBkFYs@Ec@Ig@Ce@F_@NUVOVER@PHPRHN@XC^On@Qf@cAhBo@vA_A`BWb@wAvBuBrCgArBU\\aCxFqAnCuDjHyBhEKb@Kj@k@hAcCrEy@nAkAtAu@r@e@`@gAr@iAn@u@\\_Bh@s@NaBVkALy@@_THeEB{BFkAHgALqATaBd@sBp@mCjA{CnBcGpFqBfByEtEgFzEsArAqBlBeD~C}ObOqV`VcNlMyNhN{MjMgGfGiChCmEjEcJbJeA~@_CbCw@t@sDtDoDxDaC~CyBdDyAjC}A`D{AxDwEvLiDhI{@jBsAfCqItOwAhCwAbCoBlCo@v@eBfByApAuAdAqChBcAh@aHdDuU~KsDfBkM|G_GxCu@ZyBx@oBh@sBb@oFz@qNtBkFx@oEl@kFz@uHhAmIpAyCh@qAXwC|@mBv@kAj@gCvAcJhGqMxIsAz@{@TcA^eBn@u@Tk@JaCNwGPcCJqBHUDeAVl@vEn@vFR|A^rBV~@p@bB`ChEq@x@o@x@s@v@g@ZoAh@cATgAJ_G?uKEc@A?NA\\O?mA?M?'
 let meetUpSpots = [...document.getElementsByClassName('spot')];
@@ -82,7 +83,7 @@ function initMap() {
     fillOpacity: 0.00,
     map,
     center: myLatLng,
-    radius: 1609.34,//1mile in meters
+    radius: searchRadius,//1mile in meters
   })
   for (let i = 0; i < places.length; i++) {
     let place = places[i];

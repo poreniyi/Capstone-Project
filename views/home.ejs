@@ -14,20 +14,22 @@
             <br>
             <button id="add" type="button">Add Location</button>
             <div class='addressInfo'>
-                <label>Location:1</label><input class='defaultSearchInputs' type="text" name="location" style="width: 50%; margin: 3px">
+                <label>Location 1:</label><input class='defaultSearchInputs' type="text" name="location" style="width: 50%; margin: 3px">
+                <br>
                 <label>Name:</label></Name><input type="text" name="Name" >
+                <hr>
             </div>
             <div class='addressInfo'>
-                <label>Location:2</label><input class='defaultSearchInputs' type="text" name="location" style="width: 50%; margin: 3px">
+                <label>Location 2:</label><input class='defaultSearchInputs' type="text" name="location" style="width: 50%; margin: 3px">
+                <br>
                 <label>Name:</label></Name><input type="text" name="Name" >
+                <hr>
             </div>
-            <div id='checkBoxes'>
-                <input type='checkbox' name='type' value='cafe' id='cafeCheck'> <label for='cafeCheck'>Cafe</label>
-                <input type='checkbox' name='type' value='bank' id='bankCheck'> <label for='bankCheck'>Bank</label>
-                <input type='checkbox' name='type' value='bar' id='barCheck'> <label for='barCheck'>Bar</label>
-                <input type='checkbox' name='type' value='museum' id='museumCheck'> <label for='museumCheck'>Museum</label>
-                <input type='checkbox' name='type' value='movie_theater' id='movieCheck'> <label for='movieCheck'>Movie theater</label>
-                <input type='checkbox' name='type' value='shopping_mall' id='mallCheck'> <label for='mallCheck'>Mall</label>
+            <div id='radioButtons'>
+                <input type='radio' name='type' value='cafe' id='cafeCheck' checked> <label for='cafeCheck'>Cafe</label>
+                <input type='radio' name='type' value='bank' id='bankCheck'> <label for='bankCheck'>Bank</label>
+                <input type='radio' name='type' value='bar' id='barCheck'> <label for='barCheck'>Bar</label>
+                <input type='radio' name='type' value='restaurant' id='restaurantCheck'> <label for='restaurantCheck'>Restaurant</label>
             </div>
             <input id='submit' type="Submit" value="Next">
         </form>

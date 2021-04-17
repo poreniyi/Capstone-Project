@@ -35,16 +35,21 @@ sampleLocations = [
   }
 ];
 
-
 class Rendeview {
-    places = [];// stores addresses and that were sent as a request
-    centerpointCoordinates = {};
-    nearbySpots = [];
-    constructor(arrayLocations) {
+    places = [];                    //stores location data that was submitted
+    centerpointCoordinates = {};    //stores centerpoint coordinates
+    nearbySpots = [];               //stores valid meetup locations
+    type = "";                      //stores user entered PoI type
+    searchRadius = 1609.34;         //meters, 1609.34m = 1mi, will be overwritten to scale for overall distance
+    MAX_SEARCH_RADIUS = 10000       //meters, 10000m(10km) = ~6.2mi, used as cap for how large searchRadius can be
+    
+    constructor(arrayLocations, type) {
         this.places = arrayLocations; //store all places
+        this.type = type;
         this.calculateCenterpoint();
     }
 
+    //Unused in favor of balanceDriveTime()
     async findTripLength(tempCenterpoint) {
         let originCoordinates = [];
         if (!tempCenterpoint) {
@@ -92,12 +97,14 @@ class Rendeview {
 
     }
 
+    //Currently only used to create polyline on final map result
     async findDirections() {
         for (let i = 0; i < this.places.length; i++) {//loops through all the places and makes an apiCall on each one
             let apiData = await client.directions({
                 params: {
                     key: mykey,
                     units: 'imperial',
+                    departure_time: 'now',
                     origin: {
                         latitude: this.places[i].coordinates.lat,
                         longitude: this.places[i].coordinates.lng
@@ -123,7 +130,7 @@ class Rendeview {
             let obj = {
                 Polyline: apiData.data.routes[0].overview_polyline.points,
                 totalDistance: route.distance,
-                totalDuration: route.duration,
+                totalDuration: route.duration_in_traffic,
                 Steps: steps,
                 Start: route.start_location,
                 End: route.end_location,
@@ -132,7 +139,6 @@ class Rendeview {
             //console.log(obj);
         }
     }
-
 
     calculateCenterpoint() {
         let totalLat = 0;
@@ -145,19 +151,71 @@ class Rendeview {
         let avgLng = totalLng / this.places.length;
         this.centerpointCoordinates = { lat: avgLat, lng: avgLng };
     }
-    async findNearBySpots(type) {
-        type = 'cafe';
+
+    async findNearBySpots() {
+        
+        //Default to MAX_SEARCH_RADIUS (10km = ~6.2mi) if searchRadius scaled too much
+        if (this.MAX_SEARCH_RADIUS < this.searchRadius)
+            this.searchRadius = this.MAX_SEARCH_RADIUS;
+        
+        //Cost: $0.032 per query
         let apiData = await client.placesNearby({
             params: {
                 key: mykey,
-                radius: 1609.34,// distance in meters
-                type: type,
+                radius: this.searchRadius,// distance in meters
+                type: this.type,
+                rankby: "prominence",   //sorts results based on their importance
                 location: {
                     latitude: this.centerpointCoordinates.lat,
                     longitude: this.centerpointCoordinates.lng,
                 }
             }
         })
+        
+        //Retry logic if ZERO_RESULTS is returned
+        if(apiData.data.status == "ZERO_RESULTS") {
+            console.log("zero results returned1");
+
+            //Increase search radius by 10%
+            this.searchRadius = this.searchRadius * 1.1;
+
+            //Run nearby search API again
+            apiData = await client.placesNearby({
+                params: {
+                    key: mykey,
+                    radius: this.searchRadius,// distance in meters
+                    type: this.type,
+                    rankby: "prominence",   //sorts results based on their importance
+                    location: {
+                        latitude: this.centerpointCoordinates.lat,
+                        longitude: this.centerpointCoordinates.lng,
+                    }
+                }
+            })
+
+            //Retry logic if ZERO_RESULTS is returned again
+            if(apiData.data.status == "ZERO_RESULTS") {
+                console.log("zero results returned2");
+                //Remove user-entered PoI type 
+                this.type = "";
+
+                //Run nearby search API again
+                apiData = await client.placesNearby({
+                    params: {
+                        key: mykey,
+                        radius: this.searchRadius,// distance in meters
+                        type: this.type,
+                        rankby: "prominence",   //sorts results based on their importance
+                        location: {
+                            latitude: this.centerpointCoordinates.lat,
+                            longitude: this.centerpointCoordinates.lng,
+                        }
+                    }
+                })
+            }
+
+        }
+
         let possibleMeetUpSpots = [];
         apiData.data.results.forEach(element => {
             if (element.business_status == 'OPERATIONAL') {
@@ -165,7 +223,6 @@ class Rendeview {
                     name: element.name,
                     coordinates: element.geometry.location,
                     address: element.vicinity,
-                    type: type
                 })
             }
         })
@@ -190,7 +247,7 @@ class Rendeview {
         16 - calculated average drive time for remaining trip objects
         20 - all changes in looping portion of algorithm 
         */
-        let debug = 1;
+        let debug = 0;
 
         //Debug print
         if (debug == 1 || debug == 10){
@@ -216,17 +273,25 @@ class Rendeview {
             console.log("END ABSTRACTED STARTING LOCATION COORDINATES FOR API CALL\n")
         }
 
-        /*
-        Idea: Get centerpointCoordinates to snap to nearest point of interest
-        Rationale: Averaged coordinates may be positioned in a spot that results in
-        the distance matrix outputting higher than expected drive times due to excessive
-        routing to get to the averaged coordinates.  Snapping to the nearest point of interest
-        sets the centerpointCoordinates to an accessible location which will
-        limit excessive routing and produce a more accurate drive time
-        */
+        //Make reverse geocode call to snap averaged coordinates to driveable coordinates
+        let apiData1 = await client.geocode({
+            params: {
+                key: mykey,
+                latlng: this.centerpointCoordinates.lat + ", " + this.centerpointCoordinates.lng
+            }
+        })
+    
+        //Parse for new coordinates
+        let adjLat = apiData1.data.results[0].geometry.location.lat;
+        let adjLng = apiData1.data.results[0].geometry.location.lng;
+        
+        //Assign coordinates to class property
+        this.centerpointCoordinates.lat = adjLat;
+        this.centerpointCoordinates.lng = adjLng;
 
         //Run Distance Matrix API
-        let apiData = await client.distancematrix({
+        //Cost: $0.01 * count(origins) * count(destinations)
+        let apiData2 = await client.distancematrix({
             params: {
                 key: mykey,
                 units: 'imperial',
@@ -235,7 +300,7 @@ class Rendeview {
                 origins: originCoordinates
             }
         })
-        let rows = apiData.data.rows;
+        let rows = apiData2.data.rows;
 
         //Debug print
         if (debug == 1 || debug == 12) {
@@ -244,6 +309,9 @@ class Rendeview {
             console.log("END API CALL RESPONSE\n");
         }
 
+        //Variable for finding average distance to be used in nearby search radius
+        let totalDistance = 0;
+
         //Parse JSON response for duration in traffic time values and store them for each startingLocation
         let trips = [];
         for (let i = 0; i < rows.length; i++) {
@@ -251,7 +319,13 @@ class Rendeview {
                 time: rows[i].elements[0].duration_in_traffic.value,
                 coordinates: originCoordinates[i],
             })
+
+            //Summing total distances for average distance
+            totalDistance += rows[i].elements[0].distance.value;
         }
+
+        //Store 10% of average distance to be used for search radius
+        this.searchRadius = (totalDistance / rows.length) * 0.1;
 
         //Debug print
         if (debug == 1 || debug == 13) {
@@ -301,14 +375,14 @@ class Rendeview {
         }
         
         //Variable setup for looping process
-        let count = 0;
-        let allBalanced = false;
-        let num = 6;
-        let fraction = 1/num;
-        let MAX_ITERATIONS = 10;
-        let BALANCE_TOLERANCE = .1;
-        let MIN_TOLERANCE = 1 - BALANCE_TOLERANCE;
-        let MAX_TOLERANCE = 1 + BALANCE_TOLERANCE;
+        let count = 0;                              //while loop counter
+        let allBalanced = false;                    //flag for if all locations are balanced
+        let num = 6;                                //see fraction(below)
+        let fraction = 1/num;                       //used to cut distance between centerpoint and furthest location
+        let MAX_ITERATIONS = 10;                    //maximum balancing attempts of while loop
+        let BALANCE_TOLERANCE = .1;                 //used to determine if locations are within percentage of avg drive time
+        let MIN_TOLERANCE = 1 - BALANCE_TOLERANCE;  //see above
+        let MAX_TOLERANCE = 1 + BALANCE_TOLERANCE;  //see above
 
         //Check if drive times are already in a "balanced" state
         //Criteria: All trip times that were not excluded are within BALANCE_TOLERANCE of avgTime
@@ -376,6 +450,7 @@ class Rendeview {
             }
             
             //Run Distance Matrix API
+            //Cost: $0.01 * count(origins) * count(destinations)(1) * count(iterations)
             let apiData = await client.distancematrix({
                 params: {
                     key: mykey,
@@ -462,7 +537,8 @@ class Rendeview {
         return {
             centerpointCoordinates: this.centerpointCoordinates,
             places: this.places,
-            possibleMeetUpSpots: this.nearbySpots
+            possibleMeetUpSpots: this.nearbySpots,
+            searchRadius: this.searchRadius
         }
     }
 

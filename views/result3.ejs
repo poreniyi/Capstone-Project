@@ -22,6 +22,7 @@
     <div id='lngCenter' hidden><%= centerpointCoordinates.lng %>'</div>
     <div id='Centerpoint'>
         <%=`Centerpoint:${centerpointCoordinates.lat},${centerpointCoordinates.lng}` %>
+    <div id='searchRadius' hidden><%=searchRadius %></div>
     </div>
     <div data-copy=<%=`${centerpointCoordinates.lat},${centerpointCoordinates.lng}`%> id='copyCoordinates'>click to copy coordinates</div>
         <div id='placesInfo'>
@@ -29,9 +30,9 @@
             <% places.forEach(element=>{%>
             <div class='individualPlace'>
                 <%let message=''%>
-                <%message+=`${element.PersonsName}:${element.location}\n`%>
-                <%message+=`Distance:${element.Directions.totalDistance.text}les\n` %>
-                <%message+=`Time:${element.Directions.totalDuration.text}`%>
+                <%message+=`${element.PersonsName}: ${element.location}\n`%>
+                <%message+=`Distance: ${element.Directions.totalDistance.text}les\n` %>
+                <%message+=`Time: ${element.Directions.totalDuration.text}`%>
                 <div hidden class='hiddenInfo'>
                     <div class='Polyline'><%=element.Directions.Polyline %></div>
                     <div class='coordinates'>
@@ -42,6 +43,7 @@
                     <div class='Address'><%=element.location%></div>
                 </div>
                 <p><%=message%></p>
+                <!-- Removing directions displayed on results page
                 <div class='steps'>
                 <ol>
                 <% element.Directions.Steps.forEach(step=>{%>
@@ -49,6 +51,7 @@
                <% })%>
                  </ol>
                 </div>
+                -->
             </div>
             <% })%>
         </div>

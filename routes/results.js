@@ -42,13 +42,13 @@ let randomWords = require('random-words');
 // })
 router.post('/results', async (req, res) => {
     let formData = JSON.parse(req.body.data);
-    let types = JSON.parse(req.body.type);
+    let type = JSON.parse(req.body.type);
     let places = formData.filter(location => location.coordinates);
     if (!places.length || places.length < 2) {
         res.redirect('/')
         return;
     }
-    var rendezvous = new Rendeview3(formData);
+    var rendezvous = new Rendeview3(formData, type);
     let data = await rendezvous.returnResult();
     let collection = req.app.locals.collection;
     let id = ''

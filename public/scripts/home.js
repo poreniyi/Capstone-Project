@@ -81,19 +81,21 @@ form.addEventListener('submit', (event) => {
 })
 addButton.addEventListener('click', () => {
     let inputCount = document.getElementsByClassName('addressInfo').length;
-    if (inputCount > 9) {
+    //5 maximum starting locations
+    if (inputCount > 4) {
         console.log(`too many addresses`);
         return;
     }
     let newDiv = document.createElement('div');
     newDiv.classList.add('addressInfo');
     let addressLabel = document.createElement('label');
-    addressLabel.textContent = `Location:${inputCount + 1}`
+    addressLabel.textContent = `Location ${inputCount + 1}: `
     let nameLabel = document.createElement('label');
-    nameLabel.textContent = 'Name'
+    nameLabel.textContent = 'Name: '
     let newLocation = document.createElement('input');
     newLocation.type = 'text';
     newLocation.style.width = '50%';
+    newLocation.style.margin = '3px';
     const autocomplete = new google.maps.places.Autocomplete(newLocation, options);
     autocomplete.addListener('place_changed', () => {
         let data = autocomplete.getPlace();
@@ -102,7 +104,7 @@ addButton.addEventListener('click', () => {
     googleLocations.push(autocomplete);
     newLocation.name = 'location';
     let close = document.createElement('span');
-    close.textContent = 'x';
+    close.textContent = 'Remove';
     close.classList.add('close');
     let PersonsName = document.createElement('input');
     PersonsName.name = 'Name';
@@ -111,10 +113,13 @@ addButton.addEventListener('click', () => {
     });
     newDiv.appendChild(addressLabel);
     newDiv.appendChild(newLocation);
+    newDiv.appendChild(document.createElement('br'));
     newDiv.appendChild(nameLabel);
     newDiv.appendChild(PersonsName);
+    newDiv.appendChild(document.createElement('br'));
     newDiv.appendChild(close);
-    form.insertBefore(newDiv, submit);
+    newDiv.appendChild(document.createElement('hr'));
+    form.insertBefore(newDiv, radioButtons);
 })
 
 

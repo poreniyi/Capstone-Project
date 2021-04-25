@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <title>Rendeview</title>
     <link rel='stylesheet' href='/stylesheets/home.css'>  
+    <link rel='stylesheet' href='/css/bootstrap.min.css'>  
 </head>
+
 <body>
+  <div class = "hero-image"> 
+    
+    <div style =" text-align: center;border: 2px solid white; width: 50%; margin: auto; padding: 8px ; height:900px; background: rgb(45, 45, 45, 0.75);">
 
-    <h1 style="text-align: center">Welcome to the future home of the Rendeview web app!</h1>
-
-    <div style ="text-align: center;border: 2px solid black; width: 50%; margin: auto; padding: 8px">
+        <h1 class="display-1"> Rendeview</h1>
+        
+        <p class="h6">This application lets you find an equidistant destination that accounts for time in traffic to meet with friends. </p>
+            
+        <p class ="h6">Enter in the location and optionally the name of each member, then choose what venue type you want to meet at. </p>
+        
+         
         <form id='form' action="/results" method="post">
             <br>
-            <button id="add" type="button">Add Location</button>
+            <button class="btn btn-primary" id="add" type="button">Add Location</button>
             <div class='addressInfo'>
                 <label>Location 1: </label><input class='defaultSearchInputs' type="text" name="location" style="width: 50%; margin: 3px">
                 <br>
@@ -26,15 +35,23 @@
                 <hr>
             </div>
             <div id='radioButtons'>
-                <input type='radio' name='type' value='cafe' id='cafeCheck' checked> <label for='cafeCheck'>Cafe</label>
-                <input type='radio' name='type' value='bank' id='bankCheck'> <label for='bankCheck'>Bank</label>
-                <input type='radio' name='type' value='bar' id='barCheck'> <label for='barCheck'>Bar</label>
-                <input type='radio' name='type' value='restaurant' id='restaurantCheck'> <label for='restaurantCheck'>Restaurant</label>
+                <input   class='form-check-input' type='radio' name='type' value='cafe' id='cafeCheck' checked> <label for='cafeCheck'>Cafe</label>
+                <input   class='form-check-input' type='radio' name='type' value='bank' id='bankCheck'> <label for='bankCheck'>Bank</label>
+                <input   class='form-check-input' type='radio' name='type' value='bar' id='barCheck'> <label for='barCheck'>Bar</label>
+                <input   class='form-check-input'   type='radio' name='type' value='restaurant' id='restaurantCheck'> <label for='restaurantCheck'>Restaurant</label>
             </div>
-            <input id='submit' type="Submit" value="Next">
+            <input  class="btn btn-primary" id='submit' type="Submit" value="Search">
         </form>
+        
+        
+        
     </div>
 
-  <script src='/scripts/home.js'></script>
+    <script src='/scripts/home.js'></script>
+    <script src='/js/bootstrap.min.js'></script>
+
+</div>
 </body>
+
+
 </html>

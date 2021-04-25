@@ -174,10 +174,10 @@ class Rendeview {
         
         //Retry logic if ZERO_RESULTS is returned
         if(apiData.data.status == "ZERO_RESULTS") {
-            console.log("zero results returned1");
+            console.log("zero results returned.  Increasing search radius...");
 
-            //Increase search radius by 10%
-            this.searchRadius = this.searchRadius * 1.1;
+            //Increase search radius by 15%
+            this.searchRadius = this.searchRadius * 1.15;
 
             //Run nearby search API again
             apiData = await client.placesNearby({
@@ -195,7 +195,7 @@ class Rendeview {
 
             //Retry logic if ZERO_RESULTS is returned again
             if(apiData.data.status == "ZERO_RESULTS") {
-                console.log("zero results returned2");
+                console.log("Zero results returned. Removing PoI type... ");
                 //Remove user-entered PoI type 
                 this.type = "";
 
@@ -347,11 +347,14 @@ class Rendeview {
         }
 
         //Remove trips in close proximity to centerpoint
-        //Criteria: Remove trip if drive time is less than 50% of avgTime
+        //Criteria: Remove trip if drive time is less than 75% of avgTime
         for (let i = 0; i < trips.length; i++) {
-            if (trips[i].time < 0.5 * avgTime){
+            if (trips[i].time < 0.75 * avgTime){
                 trips.splice(i, 1);
                 originCoordinates.splice(i, 1);
+
+                //Reset index
+                i = 0;
             }
         }
 

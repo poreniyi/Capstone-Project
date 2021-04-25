@@ -4,3 +4,37 @@
     transform: translate(0%, -50%);
   }
   .close:hover {background: #bbb;}
+
+  h1{
+    color: white;
+  }
+
+  p{
+    color: white;
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    height: auto;
+      }
+
+      label{
+        color: white;
+      }
+  #section{
+    height: 1000px;
+
+  }
+
+  .hero-image {
+    background: url('/Images/group.jpg') no-repeat center; 
+    background-size: cover;
+    height: 500px;
+    position: relative;
+    background-position: cover;
+    height: 100%;
+    }
+  
+
+

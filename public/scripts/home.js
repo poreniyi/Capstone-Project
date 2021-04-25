@@ -105,6 +105,7 @@ addButton.addEventListener('click', () => {
     newLocation.name = 'location';
     let close = document.createElement('span');
     close.textContent = 'Remove';
+    close.style.color = 'white';
     close.classList.add('close');
     let PersonsName = document.createElement('input');
     PersonsName.name = 'Name';
